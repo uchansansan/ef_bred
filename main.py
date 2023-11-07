@@ -1,3 +1,4 @@
+import random
 def list_keys_upper(keys):
     key_list_upper = []
     for key in keys:
@@ -30,4 +31,18 @@ for idx in range(len(words)-1):
 print(words_dict)
 result = ''
 for i in range(num_sen):
-    print(list_keys_upper(words_dict.keys()))
+    out = ''
+    first_word_list = list_keys_upper(words_dict.keys())
+    n = len(first_word_list)
+    #print(n)
+    #print(random.randint(0, n))
+    start = first_word_list[random.randint(0, n-1)]
+    out += start + ' '
+    for j in range(10):
+        #print(len(words_dict[start]), words_dict[start])
+        m = random.randint(0, len(words_dict[start])-1)
+        out += words_dict[start][m] + ' '
+        start = words_dict[start][m]
+    print(out+'.')
+    #print(first_word_list[random.randint(0, n-1)])
+    #print(list_keys_upper(words_dict.keys())[random.randint(0, n-1)])
