@@ -1,3 +1,10 @@
+def list_keys_upper(keys):
+    key_list_upper = []
+    for key in keys:
+        if key[0].isupper():
+            key_list_upper.append(key)
+    return key_list_upper
+
 input = open('input.txt', 'r', encoding='utf-8')
 
 num_sen = int(input.readline())
@@ -21,4 +28,6 @@ for idx in range(len(words)-1):
         words_dict[words[idx]] = [words[idx + 1]]
 
 print(words_dict)
-
+result = ''
+for i in range(num_sen):
+    print(list_keys_upper(words_dict.keys()))
