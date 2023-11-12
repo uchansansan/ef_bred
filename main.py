@@ -1,48 +1,51 @@
+"""
+Case_4
+Group:
+Uchanov Igor        80%
+Fishchukova Sofia   45%
+Tsvykh Viktoria     45%
+"""
+
 import random
-def list_keys_upper(keys):
-    key_list_upper = []
-    for key in keys:
-        if key[0].isupper():
-            key_list_upper.append(key)
-    return key_list_upper
-
-input = open('input.txt', 'r', encoding='utf-8')
-
-num_sen = int(input.readline())
-
-with open('input.txt', 'r', encoding='utf-8') as file_in:
-    text = file_in.readlines()
-words = []
-
-for i in text:
-    words.extend(i.split())
-
-words = words[1:]
 
 
-words_dict = {}
+def extract_upper_case_keys(keys):
+    upper_case_keys = [key for key in keys if key[0].isupper()]
+    return upper_case_keys
 
-for idx in range(len(words)-1):
-    if words[idx] in words_dict.keys():
-        words_dict[words[idx]] += [words[idx+1]]
-    else:
-        words_dict[words[idx]] = [words[idx + 1]]
 
-print(words_dict)
-result = ''
-for i in range(num_sen):
-    out = ''
-    first_word_list = list_keys_upper(words_dict.keys())
-    n = len(first_word_list)
-    #print(n)
-    #print(random.randint(0, n))
-    start = first_word_list[random.randint(0, n-1)]
-    out += start + ' '
-    for j in range(10):
-        #print(len(words_dict[start]), words_dict[start])
-        m = random.randint(0, len(words_dict[start])-1)
-        out += words_dict[start][m] + ' '
-        start = words_dict[start][m]
-    print(out+'.')
-    #print(first_word_list[random.randint(0, n-1)])
-    #print(list_keys_upper(words_dict.keys())[random.randint(0, n-1)])
+def main():
+    with open('input.txt', 'r', encoding='utf-8') as file_in:
+        num_sentences = int(file_in.readline())
+        text = file_in.readlines()
+
+    words = [word for line in text for word in line.split()][1:]
+
+    word_dict = {}
+    for idx in range(len(words) - 1):
+        if words[idx] in word_dict:
+            word_dict[words[idx]].append(words[idx + 1])
+        else:
+            word_dict[words[idx]] = [words[idx + 1]]
+
+    for _ in range(num_sentences):
+        output = ''
+        first_words = extract_upper_case_keys(word_dict.keys())
+        n = len(first_words)
+        start = first_words[random.randint(0, n - 1)]
+        output += start + ' '
+
+        for _ in range(10):
+            if start in word_dict:
+                choices = word_dict[start]
+                next_word = random.choice(choices)
+                output += next_word + ' '
+                start = next_word
+            else:
+                break
+
+        print(output.strip() + '.')
+
+
+if __name__ == "__main__":
+    main()
